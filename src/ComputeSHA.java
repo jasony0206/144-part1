@@ -5,10 +5,8 @@ import java.security.*;
 
 public class ComputeSHA {
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
-        //String filename = args[0];
-        String filename = "test";
+        String filename = args[0];
         String text = getFileContent(filename);
-        System.out.println(text);
 
         String sha1 = convertToSHA1(text);
         System.out.println(sha1);
