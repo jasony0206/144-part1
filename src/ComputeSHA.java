@@ -5,7 +5,8 @@ import java.security.*;
 
 public class ComputeSHA {
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
-        String filename = args[0];
+        //String filename = args[0];
+        String filename = "test";
         String text = getFileContent(filename);
         System.out.println(text);
 
@@ -22,8 +23,10 @@ public class ComputeSHA {
 
             while (line != null) {
                 builder.append(line);
-                builder.append("\n");
                 line = reader.readLine();
+                if (line != null) {
+                    builder.append("\n");
+                }
             }
 
             text = builder.toString();
@@ -34,7 +37,15 @@ public class ComputeSHA {
     }
 
     public static String convertToSHA1(String text) throws NoSuchAlgorithmException {
-        MessageDigest digest = MessageDigest.getInstance("SHA-1");
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+        messageDigest.update(text.getBytes());
+        byte[] messageDigestSHA1 = messageDigest.digest();
+        StringBuilder stringBuilder = new StringBuilder();
 
+        for (byte digit : messageDigestSHA1) {
+            stringBuilder.append(String.format("%02x", digit & 0xff));
+        }
+
+        return stringBuilder.toString();
     }
 }
