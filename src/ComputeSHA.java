@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.security.*;
 
 public class ComputeSHA {
@@ -13,24 +11,19 @@ public class ComputeSHA {
     }
 
     public static String getFileContent(String filename) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(filename));
-        String text;
+        String text = "";
+        FileInputStream in = null;
         try {
-            StringBuilder builder = new StringBuilder();
-            String line = reader.readLine();
-
-            while (line != null) {
-                builder.append(line);
-                line = reader.readLine();
-                if (line != null) {
-                    builder.append("\n");
-                }
+            in = new FileInputStream(filename);
+            int c;
+            while ((c = in.read()) != -1) {
+                text += (char)c;
             }
 
-            text = builder.toString();
             return text;
         } finally {
-            reader.close();
+            if (in != null)
+                in.close();
         }
     }
 
